@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data (generated/processed files, keep raw)
+data/processed/*
+data/chroma/*
+data/sqlite/*
+!data/raw/*
+
+# Environment
+.env
+*.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# ChromaDB
+chroma.sqlite3
