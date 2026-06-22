@@ -1,0 +1,241 @@
+blockers:
+  # Financial Blockers
+  - name: "No paying customers (zero revenue)"
+    affected_stages: ["Fundraising", "Launch_Planning", "Growth"]
+    domain: "financial"
+    priority: "high"
+    description: "Lack of revenue prevents access to financing programs that require traction"
+    blocks_stage_transition: true
+    explanation: "Sans revenus clients, il est difficile de démontrer la viabilité commerciale nécessaire aux stades avancés"
+
+  - name: "Insufficient revenue traction"
+    affected_stages: ["Launch_Planning", "Growth"]
+    domain: "financial"
+    priority: "high"
+    description: "Revenue not growing at sufficient pace for scaling"
+    blocks_stage_transition: true
+    explanation: "Le manque de traction financière limite les possibilités d'expansion et d'investissement"
+
+  - name: "No clear business model"
+    affected_stages: ["Structuration", "Fundraising", "Launch_Planning"]
+    domain: "financial"
+    priority: "high"
+    description: "Undefined or untested business model hinders growth and funding"
+    blocks_stage_transition: true
+    explanation: "Un modèle économique flou empêche la prise de décision stratégique et l'attraction d'investisseurs"
+
+  - name: "Insufficient funding runway"
+    affected_stages: ["Launch_Planning", "Growth"]
+    domain: "financial"
+    priority: "medium"
+    description: "Limited financial resources constrain operational capacity"
+    blocks_stage_transition: false
+    explanation: "Des ressources financières limitées réduisent la capacité à investir dans la croissance"
+
+  # Legal Blockers
+  - name: "No legal structure"
+    affected_stages: ["Structuration", "Fundraising", "Launch_Planning", "Growth"]
+    domain: "legal"
+    priority: "high"
+    description: "Absence of legal form limits access to formal funding and partnerships"
+    blocks_stage_transition: true
+    explanation: "L'absence de statut juridique restreint l'accès aux financements publics, aux partenariats et à certaines activités commerciales"
+
+  - name: "Inappropriate legal structure"
+    affected_stages: ["Fundraising", "Launch_Planning", "Growth"]
+    domain: "legal"
+    priority: "medium"
+    description: "Current legal form not optimal for growth or funding objectives"
+    blocks_stage_transition: false
+    explanation: "Le statut juridique actuel peut ne pas être adapté aux besoins de levée de fonds ou d'expansion"
+
+  - name: "Intellectual property not protected"
+    affected_stages: ["Innovation", "Fundraising", "Launch_Planning"]
+    domain: "legal"
+    priority: "medium"
+    description: "Lack of IP protection increases vulnerability to competition"
+    blocks_stage_transition: false
+    explanation: "L'absence de protection de la propriété intellectuelle augmente les risques de copie et diminue la valeur de l'entreprise"
+
+  # Market Blockers
+  - name: "No customer validation evidence"
+    affected_stages: ["Market_Validation", "Structuration", "Fundraising"]
+    domain: "market"
+    priority: "high"
+    description: "Lack of customer validation evidence increases market risk perception"
+    blocks_stage_transition: true
+    explanation: "Sans preuve de validation client, il est difficile de démontrer l'existence d'un réel besoin de marché"
+
+  - name: "Insufficient market research"
+    affected_stages: ["Ideation", "Market_Validation"]
+    domain: "market"
+    priority: "medium"
+    description: "Limited understanding of target market and customer needs"
+    blocks_stage_transition: false
+    explanation: "Une étude de marché insuffisante peut conduire à un mauvais positionnement ou à une offre inadaptée"
+
+  - name: "Weak competitive differentiation"
+    affected_stages: ["Structuration", "Fundraising", "Launch_Planning"]
+    domain: "market"
+    priority: "medium"
+    description: "Insufficient differentiation from competitors in the market"
+    blocks_stage_transition: false
+    explanation: "Un manque de différenciation claire rend difficile l'attraction et la rétention de clients"
+
+  - name: "Undefined target market"
+    affected_stages: ["Ideation", "Market_Validation"]
+    domain: "market"
+    priority: "medium"
+    description: "Lack of clearly defined target customer segment"
+    blocks_stage_transition: false
+    explanation: "L'absence de définition claire du marché cible complique les efforts de marketing et de vente"
+
+  # Technical Blockers
+  - name: "No functional MVP/prototype"
+    affected_stages: ["Market_Validation", "Structuration", "Fundraising"]
+    domain: "technical"
+    priority: "high"
+    description: "Absence of working product limits validation and customer acquisition"
+    blocks_stage_transition: true
+    explanation: "Sans produit fonctionnel, il est difficile de valider l'idée auprès de clients réels"
+
+  - name: "Technical feasibility unproven"
+    affected_stages: ["Structuration", "Fundraising"]
+    domain: "technical"
+    priority: "high"
+    description: "Core technical assumptions not validated through experimentation"
+    blocks_stage_transition: true
+    explanation: "Des hypothèses techniques non validées augmentent les risques d'échec lors du développement"
+
+  - name: "Technology stack not scalable"
+    affected_stages: ["Launch_Planning", "Growth"]
+    domain: "technical"
+    priority: "medium"
+    description: "Current technical architecture limits ability to scale"
+    blocks_stage_transition: false
+    explanation: "Une architecture technique non scalable crée des goulets d'étranglement lors de la croissance"
+
+  # Organizational Blockers
+  - name: "Solo founder with no team"
+    affected_stages: ["Structuration", "Fundraising"]
+    domain: "organisational"
+    priority: "medium"
+    description: "Single founder teams may lack necessary skills for scaling"
+    blocks_stage_transition: false
+    explanation: "Un fondateur seul peut rencontrer des difficultés à couvrir tous les domaines nécessaires à la croissance"
+
+  - name: "Missing key skills in team"
+    affected_stages: ["Structuration", "Fundraising", "Launch_Planning"]
+    domain: "organisational"
+    priority: "medium"
+    description: "Team lacks critical skills needed for next growth stage"
+    blocks_stage_transition: false
+    explanation: "L'absence de compétences clés dans l'équipe peut ralentir le développement et l'exécution"
+
+  - name: "Inadequate operational processes"
+    affected_stages: ["Launch_Planning", "Growth"]
+    domain: "organisational"
+    priority: "medium"
+    description: "Lack of standardized processes hampers efficiency and quality"
+    blocks_stage_transition: false
+    explanation: "Des processus opérationnels inadéquats réduisent l'efficacité et augmentent les erreurs"
+
+  - name: "No clear leadership structure"
+    affected_stages: ["Structuration", "Fundraising"]
+    domain: "organisational"
+    priority: "low"
+    description: "Unclear roles and responsibilities within the founding team"
+    blocks_stage_transition: false
+    explanation: "Un manque de clarté dans la structure de direction peut conduire à des conflits et des inefficacités"
+
+  # Sustainability/Social Impact Blockers
+  - name: "No sustainability plan"
+    affected_stages: ["Structuration", "Fundraising", "Launch_Planning", "Growth"]
+    domain: "sustainability"
+    priority: "low"
+    description: "Absence of environmental or social impact considerations"
+    blocks_stage_transition: false
+    explanation: "L'absence de plan de durabilité peut limiter l'accès à certains financements et partenariats"
+
+  - name: "Social impact not measured"
+    affected_stages: ["Structuration", "Fundraising", "Launch_Planning", "Growth"]
+    domain: "social_impact"
+    priority: "low"
+    description: "Lack of measurement and tracking of social impact metrics"
+    blocks_stage_transition: false
+    explanation: "L'absence de mesure de l'impact social limite la capacité à démontrer la valeur créée"
+
+  # Digital/Technology Adoption Blockers
+  - name: "Limited digital presence"
+    affected_stages: ["Structuration", "Fundraising", "Launch_Planning"]
+    domain: "digital"
+    priority: "medium"
+    description: "Insufficient online presence for customer acquisition and credibility"
+    blocks_stage_transition: false
+    explanation: "Une présence numérique limitée réduit la visibilité et la crédibilité auprès des clients et partenaires"
+
+  - name: "No e-commerce capability"
+    affected_stages: ["Launch_Planning", "Growth"]
+    domain: "digital"
+    priority: "medium"
+    description: "Inability to conduct sales online limits market reach"
+    blocks_stage_transition: false
+    explanation: "L'absence de capacité de vente en ligne restreint l'accès à des marchés plus larges"
+
+  # Sector-specific Blockers (examples)
+  - name: "Lack of agricultural technical expertise"
+    affected_stages: ["Structuration", "Fundraising"]
+    domain: "technical"
+    priority: "medium"
+    description: "Insufficient technical knowledge for agricultural production or processing"
+    blocks_stage_transition: false
+    explanation: "L'absence d'expertise technique agricole limite la qualité et l'efficacité de la production"
+
+  - name: "Insufficient food safety certifications"
+    affected_stages: ["Launch_Planning", "Growth"]
+    domain: "regulatory"
+    priority: "medium"
+    description: "Lack of required certifications for food production and sale"
+    blocks_stage_transition: true
+    explanation: "L'absence de certifications sanitaires nécessaires bloque l'accès à certains marchés et canaux de distribution"
+
+  - name: "Missing required licenses or permits"
+    affected_stages: ["Launch_Planning", "Growth"]
+    domain: "regulatory"
+    priority: "high"
+    description: "Lack of necessary business licenses or operational permits"
+    blocks_stage_transition: true
+    explanation: "L'absence de licences ou permits requis peut empêcher l'exploitation légale de l'activité"
+
+  # General Readiness Blockers
+  - name: "Founder burnout risk"
+    affected_stages: ["All"]
+    domain: "personal"
+    priority: "low"
+    description: "High risk of founder exhaustion due to workload and stress"
+    blocks_stage_transition: false
+    explanation: "L'épuisement du fondateur constitue un risque majeur pour la continuité du projet"
+
+  - name: "Work-life imbalance"
+    affected_stages: ["All"]
+    domain: "personal"
+    priority: "low"
+    description: "Unhealthy balance between work commitment and personal life"
+    blocks_stage_transition: false
+    explanation: "Un mauvais équilibre vie professionnelle/vie personnelle peut affecter la performance à long terme"
+
+  - name: "Lack of mentor or advisor"
+    affected_stages: ["Ideation", "Market_Validation", "Structuration"]
+    domain: "support"
+    priority: "low"
+    description: "Absence of experienced guidance to navigate entrepreneurial challenges"
+    blocks_stage_transition: false
+    explanation: "L'absence de mentor ou conseiller expérimenté peut conduire à des erreurs évitables"
+
+  - name: "Limited professional network"
+    affected_stages: ["All"]
+    domain: "network"
+    priority: "low"
+    description: "Insufficient connections to industry experts, potential partners, or investors"
+    blocks_stage_transition: false
+    explanation: "Un réseau professionnel restreint limite les opportunités de partenariat, de conseil et de financement"

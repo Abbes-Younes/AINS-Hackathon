@@ -1,61 +1,35 @@
 """
-Pydantic models for the diagnostic engine output.
+Diagnostic Result Data Models
 """
 
-from typing import Dict, List, Optional
 from pydantic import BaseModel, Field
+from typing import List, Optional, Dict, Any
 
 
-class BlockerItem(BaseModel):
-    """A single blocker identified during the diagnostic."""
+class PerceptionGap(BaseModel):
+    """Perception-reality gap between self-assessed and system-assessed stage"""
+    gap_type: str = Field(..., description="Type of gap: OVER_ESTIMATION, UNDER_ESTIMATION, ACCURATE")
+    claimed_stage: str = Field(..., description="Stage self-assessed by entrepreneur")
+    actual_stage: str = Field(..., description="Stage assigned by system")
+    gap_severity: str = Field(..., description="Severity of gap: NONE, MILD, MODERATE, SEVERE")
+    explanation: str = Field(..., description="Human-readable explanation of the gap")
 
-    category: str = Field(..., description="Blocker category")
-    description: str = Field(..., description="Human-readable description of the blocker")
-    severity: str = Field("medium", description="Severity: critical, high, medium, low")
-    evidence: str = Field("", description="Evidence from questionnaire responses")
-    priority: int = Field(1, ge=1, le=10, description="Priority ranking (1=most critical)")
 
-
-class StageGap(BaseModel):
-    """Gap between self-assessed stage and system-assigned stage."""
-
-    self_assessed: Optional[str] = Field(None, description="Stage the entrepreneur claimed")
-    system_assigned: str = Field(..., description="Stage assigned by the diagnostic engine")
-    gap_description: str = Field("", description="Explanation of the gap")
-    gap_severity: str = Field("none", description="Severity: none, mild, moderate, severe")
-    overestimation: bool = Field(False, description="If entrepreneur overestimated their stage")
+class Blocker(BaseModel):
+    """Identified blocker to entrepreneurial progress"""
+    name: str = Field(..., description="Blocker name/identifier")
+    description: str = Field(..., description="General description of the blocker")
+    domain: str = Field(..., description="Domain: financial, legal, market, technical, organisational, etc.")
+    priority: str = Field(..., description="Priority level: high, medium, low")
+    affected_stages: List[str] = Field(default_factory=list, description="Stages this blocker affects")
+    explanation: str = Field(..., description="Personalized explanation of how this blocker applies")
 
 
 class DiagnosticResult(BaseModel):
-    """Complete output from the diagnostic engine."""
-
-    # ── Classification ───────────────────────────────────────────────────────
-    assigned_stage: str = Field(..., description="Stage assigned by the classifier")
-    stage_confidence: float = Field(0.0, ge=0.0, le=1.0, description="Confidence in the assigned stage")
-    stage_probabilities: Dict[str, float] = Field(
-        default_factory=dict,
-        description="Probability distribution across all stages"
-    )
-
-    # ── Evidence Trace ───────────────────────────────────────────────────────
-    evidence_trace: List[str] = Field(
-        default_factory=list,
-        description="Evidence snippets that support the assigned stage"
-    )
-    key_factors: List[str] = Field(
-        default_factory=list,
-        description="Factors that most influenced the classification"
-    )
-
-    # ── Gaps & Blockers ──────────────────────────────────────────────────────
-    perception_gap: Optional[StageGap] = Field(None, description="Perception-reality gap analysis")
-    blockers: List[BlockerItem] = Field(default_factory=list, description="Prioritized list of blockers")
-    blocker_summary: str = Field("", description="Natural language summary of main blockers")
-
-    # ── Anomalies ────────────────────────────────────────────────────────────
-    anomalies_detected: List[str] = Field(default_factory=list, description="Any contradictions or anomalies found")
-    data_quality_score: float = Field(1.0, ge=0.0, le=1.0, description="Quality/consistency of provided data")
-
-    # ── Metadata ─────────────────────────────────────────────────────────────
-    questionnaire_version: str = Field("1.0.0", description="Version of the questionnaire used")
-    questions_asked: int = Field(0, description="Number of questions asked during diagnostic")
+    """Complete diagnostic assessment result"""
+    assigned_stage: str = Field(..., description="Assigned maturity stage")
+    confidence_score: float = Field(..., ge=0.0, le=1.0, description="Confidence in classification (0.0-1.0)")
+    perception_gap: Optional[PerceptionGap] = Field(None, description="Perception-reality gap if present")
+    key_blockers: List[Blocker] = Field(default_factory=list, description="Top priority blockers")
+    evidence_trace: List[str] = Field(default_factory=list, description="Data points that influenced classification")
+    plain_language_summary: str = Field(..., description="Human-readable summary of diagnostic findings")

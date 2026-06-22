@@ -1,0 +1,260 @@
+# Scoring Configuration for Explainable Multi-Dimensional Scoring
+# Defines criteria, weights, levels, and floor constraints for 5 composite scores
+
+# Market Score (100 pts)
+market:
+  label: "Marché"
+  sub_criteria:
+    addressable_market_size:
+      label: "Taille du marché adresseable"
+      weight: 0.25
+      levels:
+        0: {"points": 0,  "label": "Marché local très restreint (< 1k personnes)"}
+        1: {"points": 6,  "label": "Marché local limité (1k-10k personnes)"}
+        2: {"points": 12, "label": "Marché local moyen (10k-50k personnes)"}
+        3: {"points": 18, "label": "Marché local large (50k-200k personnes)"}
+        4: {"points": 25, "label": "Marché national ou exportateur (> 200k personnes)"}
+    competitive_landscape:
+      label: "Analyse du paysage concurrentiel"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Aucune analyse concurrentielle"}
+        1: {"points": 4,  "label": "Analyse informelle, quelques concurrents identifiés"}
+        2: {"points": 8,  "label": "Analyse basique, forces/faiblesses principales"}
+        3: {"points": 12, "label": "Analyse détaillée avec positionnement"}
+        4: {"points": 20, "label": "Analyse stratégique avec avantages durables"}
+    customer_validation_evidence:  # HIGHEST WEIGHT - FLOOR CONSTRAINT
+      label: "Preuves de validation client"
+      weight: 0.35
+      levels:
+        0: {"points":  0, "label": "Aucun contact avec des clients potentiels"}
+        1: {"points":  4, "label": "Conversations informelles, non documentées"}
+        2: {"points": 10, "label": "Entretiens structurés documentés (≥5 utilisateurs)"}
+        3: {"points": 20, "label": "Utilisateurs pilote avec données d'utilisation"}
+        4: {"points": 35, "label": "Clients payants ou lettres d'intention signées"}
+    revenue_model_clarity:
+      label: "Clarté du modèle de revenus"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Modèle de revenus non défini"}
+        1: {"points": 4,  "label": "Idée générale de monétisation"}
+        2: {"points": 8,  "label": "Modèle testé avec quelques clients"}
+        3: {"points": 14, "label": "Modèle documenté et validé"}
+        4: {"points": 20, "label": "Modèle éprouvé avec revenus récurrents"}
+
+# Commercial Offer Score (100 pts)
+commercial_offer:
+  label: "Offre Commerciale"
+  sub_criteria:
+    value_proposition_clarity:
+      label: "Clarté de la proposition de valeur"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Proposition de valeur non définie"}
+        1: {"points": 4,  "label": "Idée générale de la valeur apportée"}
+        2: {"points": 8,  "label": "Proposition testée avec quelques clients"}
+        3: {"points": 12, "label": "Proposition documentée et validée"}
+        4: {"points": 20, "label": "Proposition éprouvée avec retour client positif"}
+    differentiation:
+      label: "Différenciation par rapport à la concurrence"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Aucune différenciation identifiable"}
+        1: {"points": 4,  "label": "Différenciation faible ou superficielle"}
+        2: {"points": 8,  "label": "Différenciation modérée avec certains avantages"}
+        3: {"points": 12, "label": "Différenciation forte avec avantages clairs"}
+        4: {"points": 20, "label": "Différenciation significative avec avantages durables"}
+    product_service_maturity:
+      label: "Maturité du produit/service"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Concept uniquement, aucun prototype"}
+        1: {"points": 4,  "label": "Prototype précoce ou maquettes"}
+        2: {"points": 8,  "label": "Produit fonctionnel de base"}
+        3: {"points": 12, "label": "Produit testé avec retours clients"}
+        4: {"points": 20, "label": "Produit mature avec améliorations continues"}
+    pricing_strategy:
+      label: "Stratégie de tarification"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Stratégie de prix non définie"}
+        1: {"points": 4,  "label": "Idée générale de tarification"}
+        2: {"points": 8,  "label": "Modèle tarifaire testé"}
+        3: {"points": 12, "label": "Stratégie tarifaire documentée"}
+        4: {"points": 20, "label": "Stratégie tarifaire éprouvée et adaptée"}
+    offer_need_alignment:
+      label: "Alignement offre-besoin"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Aucun alignement évident entre offre et besoin"}
+        1: {"points": 4,  "label": "Alignement faible basé sur des hypothèses"}
+        2: {"points": 8,  "label": "Alignement modéré avec certaines validation"}
+        3: {"points": 12, "label": "Alignement fort avec validation client"}
+        4: {"points": 20, "label": "Alignement significatif avec forte demande validée"}
+
+# Innovation Score (100 pts)
+innovation:
+  label: "Innovation"
+  sub_criteria:
+    local_novelty:
+      label: "Nouveauté dans le contexte local"
+      weight: 0.25
+      levels:
+        0: {"points": 0,  "label": "Solution identique à ce qui existe localement"}
+        1: {"points": 6,  "label": "Adaptation légère d'une solution existante"}
+        2: {"points": 12, "label": "Modification notable avec quelques améliorations"}
+        3: {"points": 18, "label": "Innovation significative avec éléments nouveaux"}
+        4: {"points": 25, "label": "Innovation de rupture ou solution novatrice"}
+    technology_intensity:
+      label: "Intensité technologique"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Solution principalement manuelle ou traditionnelle"}
+        1: {"points": 4,  "label": "Utilisation limitée de technologie de base"}
+        2: {"points": 8,  "label": "Intégration modérée de technologie standard"}
+        3: {"points": 12, "label": "Utilisation avancée de technologie pertinente"}
+        4: {"points": 20, "label": "Solution haute technologie ou de pointe"}
+    barrier_to_entry:
+      label: "Barrière à l'entrée pour les concurrents"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Facile à copier, aucune protection"}
+        1: {"points": 4,  "label": "Protection minimale ou temporaire"}
+        2: {"points": 8,  "label": "Quelques obstacles à la reproduction"}
+        3: {"points": 12, "label": "Barrières modérées nécessitant effort pour copier"}
+        4: {"points": 20, "label": "Forte protection légale, technique ou économique"}
+    departure_from_existing:
+      label: "Écart par rapport aux offres existantes"
+      weight: 0.15
+      levels:
+        0: {"points": 0,  "label": "Solution très similaire à l'existant"}
+        1: {"points": 3,  "label": "Amélioration incrémentielle minimale"}
+        2: {"points": 6,  "label": "Changement notable avec quelques différences"}
+        3: {"points": 9,  "label": "Modification substantielle avec valeur ajoutée"}
+        4: {"points": 12, "label": "Transformation significative ou nouvelle catégorie"}
+    ip_protection:
+      label: "Protection de la propriété intellectuelle"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Aucune protection de la PI"}
+        1: {"points": 4,  "label": "Protection en cours ou partiellement obtenue"}
+        2: {"points": 8,  "label": "Protection de base obtenue (ex. droit d'auteur)"}
+        3: {"points": 12, "label": "Protection solide (ex. brevet provisoire)"}
+        4: {"points": 20, "label": "Forte protection (ex. brevet déposé ou accordé)"}
+
+# Scalability Score (100 pts)
+scalability:
+  label: "Scalabilité"
+  sub_criteria:
+    replicability_without_linear_cost:
+      label: "Réplicabilité sans augmentation linéaire des coûts"
+      weight: 0.25
+      levels:
+        0: {"points": 0,  "label": "Chaque unité supplémentaire coûte autant que la première"}
+        1: {"points": 6,  "label": "Quelques économies d'échelle à partir de 10 unités"}
+        2: {"points": 12, "label": "Économies d'échelle modérées visibles à 50 unités"}
+        3: {"points": 18, "label": "Bonnes économies d'échelle à partir de 100 unités"}
+        4: {"points": 25, "label": "Excellentes économies d'échelle, coûts marginaux faibles"}
+    manual_dependency:
+      label: "Dépendance aux processus manuels"
+      weight: 0.20  # Note: inverse scoring - less manual = higher score
+      levels:
+        0: {"points": 0,  "label": "Processus entièrement manuels et intensifs"}
+        1: {"points": 4,  "label": "Majorité manuelle avec quelques éléments standardisés"}
+        2: {"points": 8,  "label": "Mixte manuel/automatisé avec procédures documentées"}
+        3: {"points": 12, "label": "Largement automatisé avec quelques étapes manuelles"}
+        4: {"points": 20, "label": "Fortement automatisé, processus standardisés"}
+    deployment_cost_structure:
+      label: "Structure des coûts de déploiement"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Coûts de déploiement très élevés et variables"}
+        1: {"points": 4,  "label": "Coûts de déploiement élevés mais prévisibles"}
+        2: {"points": 8,  "label": "Coûts de déploiement modérés avec certains variables"}
+        3: {"points": 12, "label": "Coûts de déploiement raisonnables et stables"}
+        4: {"points": 20, "label": "Coûts de déploiement faibles et hautement prévisibles"}
+    geographic_addressability:
+      label: "Adressabilité géographique du marché"
+      weight: 0.15
+      levels:
+        0: {"points": 0,  "label": "Marché extrêmement restreint (un seul point de vente)"}
+        1: {"points": 3,  "label": "Marché local limité (ville ou région immédiate)"}
+        2: {"points": 6,  "label": "Marché régional (plusieurs villes ou gouvernorats)"}
+        3: {"points": 9,  "label": "Marché national avec bonne couvrance"}
+        4: {"points": 12, "label": "Marché international ou potentiel d'exportation"}
+    automation_potential:
+      label: "Potentialité d'automatisation des opérations"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Aucun potentiel d'automatisation identifié"}
+        1: {"points": 4,  "label": "Potentiel limité avec quelques opportunités"}
+        2: {"points": 8,  "label": "Potentiel modéré avec certains éléments automatisables"}
+        3: {"points": 12, "label": "Bon potentiel d'automatisation avec plan identifiable"}
+        4: {"points": 20, "label": "Fort potentiel d'automatisation avec feuille de route"}
+
+# Green Score (100 pts)
+green:
+  label: "Green / Impact Environnemental"
+  sub_criteria:
+    environmental_impact_assessment:
+      label: "Évaluation de l'impact environnemental"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Aucune considération ou évaluation de l'impact"}
+        1: {"points": 4,  "label": "Conscience de base de certains impacts"}
+        2: {"points": 8,  "label": "Évaluation préliminaire de l'impact environnemental"}
+        3: {"points": 12, "label": "Évaluation détaillée avec points d'amélioration identifiés"}
+        4: {"points": 20, "label": "Évaluation approfondie avec plan de réduction"}
+    sdg_alignment:
+      label: "Alignement avec les Objectifs de Développement Durable (ODD)"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Aucun lien évident avec les ODD"}
+        1: {"points": 4,  "label": "Lien faible ou indirect avec un ou deux ODD"}
+        2: {"points": 8,  "label": "Lien modéré clairement identifié avec certains ODD"}
+        3: {"points": 12, "label": "Lien fort avec plusieurs ODD pertinents"}
+        4: {"points": 20, "label": "Intégration profonde des ODD dans le modèle d'affaires"}
+    resource_efficiency:
+      label: "Efficacité de l'utilisation des ressources"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Utilisation très inefficace des ressources (gaspillage important)"}
+        1: {"points": 4,  "label": "Utilisation inefficace avec certaines pertes"}
+        2: {"points": 8,  "label": "Utilisation moyenne avec quelques optimisations"}
+        3: {"points": 12, "label": "Bonne efficacité avec pratiques d'optimisation"}
+        4: {"points": 20, "label": "Excellente efficacité avec principes de l'économie circulaire"}
+    circular_economy_practices:
+      label: "Pratiques d'économie circulaire"
+      weight: 0.20
+      levels:
+        0: {"points": 0,  "label": "Aucune pratique d'économie circulaire"}
+        1: {"points": 4,  "label": "Quelques pratiques élémentaires (recyclage de base)"}
+        2: {"points": 8,  "label": "Pratiques modérées avec certains éléments circulaires"}
+        3: {"points": 12, "label": "Bonnes pratiques avec réduction, réutilisation, recyclage"}
+        4: {"points": 20, "label": "Pratiques avancées d'économie circulaire intégrées"}
+    carbon_footprint_awareness:
+      label: "Conscience de l'empreinte carbone"
+      weight: 0.10
+      levels:
+        0: {"points": 0,  "label": "Aucune conscience ou mesure de l'empreinte carbone"}
+        1: {"points": 2,  "label": "Conscience de base sans mesure formelle"}
+        2: {"points": 4,  "label": "Mesure préliminaire de l'empreinte carbone"}
+        3: {"points": 6,  "label": "Mesure régulière avec suivi de base"}
+        4: {"points": 10, "label": "Gestion proactive avec objectifs de réduction"}
+    sustainable_sourcing:
+      label: "Approvisionnement durable"
+      weight: 0.10
+      levels:
+        0: {"points": 0,  "label": "Aucun critère de durabilité dans l'approvisionnement"}
+        1: {"points": 2,  "label": "Quelques critères de durabilité appliqués de manière sporadique"}
+        2: {"points": 4,  "label": "Critères de durabilité partiellement intégrés"}
+        3: {"points": 6,  "label": "Critères de durabilité majoritairement appliqués"}
+        4: {"points": 10, "label": "Approvisionnement entièrement basé sur des critères durables"}
+
+# Floor constraints: if a critical criterion is 0, cap the dimension score
+FLOOR_CONSTRAINTS:
+  market: ("customer_validation_evidence", 20)  # If validation = 0, max market score is 20/35 = ~57% -> ~57 points
+  commercial_offer: ("value_proposition_clarity", 15)  # If value prop = 0, max commercial offer score is 15/20 = 75% -> ~75 points
+  innovation: ("local_novelty", 10)  # If local novelty = 0, max innovation score is 10/25 = 40% -> ~40 points
+  scalability: ("replicability_without_linear_cost", 15)  # If replicability = 0, max scalability score is 15/25 = 60% -> ~60 points
+  green: ("environmental_impact_assessment", 10)  # If env impact = 0, max green score is 10/20 = 50% -> ~50 points

@@ -1,0 +1,873 @@
+metadata:
+  name: "adaptive_intake_decision_tree"
+  version: "1.0.0"
+  description: "Branching logic for adaptive diagnostic intake"
+
+start_node: "welcome_questions"
+
+nodes:
+  welcome_questions:
+    type: "question"
+    question_id: "welcome_1"
+    question_text_fr: "Bonjour ! Je vais vous poser quelques questions pour mieux comprendre votre projet entrepreneurial."
+    question_text_ar: "مرحبًا! سأطرح عليك بعض الأسئلة لفهم مشروعك الريادي بشكل أفضل."
+    input_type: "info"
+    next_rules:
+      - condition: "always"
+        next_node: "sector_question"
+
+  sector_question:
+    type: "question"
+    question_id: "sector_1"
+    question_text_fr: "Dans quel secteur évolue votre projet ?"
+    question_text_ar: "في أي قطاع يعمل مشروعك؟"
+    input_type: "select"
+    options:
+      - value: "tech"
+        label_fr: "Technologie / IT"
+        label_ar: "تقنية / تكنولوجيا معلومات"
+      - value: "agri-food"
+        label_fr: "Agroalimentaire"
+        label_ar: "غذائي زراعي"
+      - value: "artisanat"
+        label_fr: "Artisanat"
+        label_ar: "حرفي"
+      - value: "services"
+        label_fr: "Services"
+        label_ar: "خدمات"
+      - value: "other"
+        label_fr: "Autre"
+        label_ar: "آخر"
+    next_rules:
+      - condition: "selected == 'tech'"
+        next_node: "tech_specific_questions"
+      - condition: "selected == 'agri-food'"
+        next_node: "agri_food_specific_questions"
+      - condition: "selected == 'artisanat'"
+        next_node: "artisanat_specific_questions"
+      - condition: "selected == 'services' or selected == 'other'"
+        next_node: "general_questions"
+
+  # Tech-specific branch
+  tech_specific_questions:
+    type: "question"
+    question_id: "tech_1"
+    question_text_fr: "Votre projet tech implique-t-il de l'intelligence artificielle ou du machine learning ?"
+    question_text_ar: "هل يتضمن مشروعك التقني ذكاءً اصطناعيًا أو تعلمًا آليًا؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "tech_ml_questions"
+      - condition: "answer == false"
+        next_node: "tech_standard_questions"
+
+  tech_ml_questions:
+    type: "question"
+    question_id: "tech_2"
+    question_text_fr: "Quel type d'IA/ML utilisez-vous principalement ?"
+    question_text_ar: "ما نوع الذكاء الاصطناعي/التعلم الآلي الذي تستخدمه principalement؟"
+    input_type: "select"
+    options:
+      - value: "nlp"
+        label_fr: "Traitement du langage naturel (NLP)"
+        label_ar: "معالجة اللغة الطبيعية"
+      - value: "vision"
+        label_fr: "Vision par ordinateur"
+        label_ar: "الرؤية الحاسوبية"
+      - value: "predictive"
+        label_fr: "Analyse prédictive"
+        label_ar: "التحليل التنبئي"
+      - value: "other_ml"
+        label_fr: "Autre type de ML"
+        label_ar: "نوع آخر من التعلم الآلي"
+    next_rules:
+      - condition: "always"
+        next_node: "has_mvp_question"
+
+  tech_standard_questions:
+    type: "question"
+    question_id: "tech_3"
+    question_text_fr: "Quel type de solution technologique développez-vous ?"
+    question_text_ar: "ما نوع الحل التكنولوجي الذي تطوره؟"
+    input_type: "select"
+    options:
+      - value: "web_app"
+        label_fr: "Application web"
+        label_ar: "تطبيق ويب"
+      - value: "mobile_app"
+        label_fr: "Application mobile"
+        label_ar: "تطبيق جوال"
+      - value: "saas"
+        label_fr: "Logiciel SaaS"
+        label_ar: "برمجيات ساس"
+      - value: "iot"
+        label_fr: "Solution IoT"
+        label_ar: "حل إنترنت الأشياء"
+      - value: "other_tech"
+        label_fr: "Autre solution technologique"
+        label_ar: "حل تقني آخر"
+    next_rules:
+      - condition: "always"
+        next_node: "has_mvp_question"
+
+  # Agri-food specific branch
+  agri_food_specific_questions:
+    type: "question"
+    question_id: "agri_food_1"
+    question_text_fr: "Votre projet agroalimentaire implique-t-il une transformation de produits ?"
+    question_text_ar: "هل يتضمن مشروعك الغذائي تحويل منتجات؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "agri_food_processing"
+      - condition: "answer == false"
+        next_node: "agri_food_production"
+
+  agri_food_processing:
+    type: "question"
+    question_id: "agri_food_2"
+    question_text_fr: "Quel type de transformation réalisez-vous ?"
+    question_text_ar: "ما نوع التحويل الذي تقوم به؟"
+    input_type: "select"
+    options:
+      - value: "artisanale"
+        label_fr: "Transformation artisanale"
+        label_ar: "تحويل حرفي"
+      - value: "industrielle"
+        label_fr: "Transformation industrielle"
+        label_ar: "تحويل صناعي"
+      - value: "biologique"
+        label_fr: "Transformation biologique"
+        label_ar: "تحويل بيولوجي"
+    next_rules:
+      - condition: "always"
+        next_node: "has_mvp_question"
+
+  agri_food_production:
+    type: "question"
+    question_id: "agri_food_3"
+    question_text_fr: "Quel type de production agricole réalisez-vous ?"
+    question_text_ar: "ما نوع الإنتاج الزراعي الذي تقوم به؟"
+    input_type: "select"
+    options:
+      - value: "cereales"
+        label_fr: "Céréales"
+        label_ar: "حبوب"
+      - value: "fruits_legumes"
+        label_fr: "Fruits et légumes"
+        label_ar: "فواكه وخضروات"
+      - value: "elevage"
+        label_fr: "Élevage"
+        label_ar: "تربية حيوانات"
+      - value: "marine"
+        label_fr: "Produits de la mer"
+        label_ar: "منتجات بحرية"
+    next_rules:
+      - condition: "always"
+        next_node: "has_mvp_question"
+
+  # Artisanat specific branch
+  artisanat_specific_questions:
+    type: "question"
+    question_id: "artisanat_1"
+    question_text_fr: "Quel type d'artisanat pratiquez-vous ?"
+    question_text_ar: "ما نوع الحرفي الذي تمارسه؟"
+    input_type: "select"
+    options:
+      - value: "potterie"
+        label_fr: "Poterie et céramique"
+        label_ar: "فخاري وسيراميك"
+      - value: "tapis"
+        label_fr: "Tapis et tissage"
+        label_ar: "سجاد ونسيج"
+      - value: "bijouterie"
+        label_fr: "Bijouterie et orfèvrerie"
+        label_ar: "مجوهرات وصوغ"
+      - value: "menuiserie"
+        label_fr: "Menuiserie et travail du bois"
+        label_ar: "نجارة وعمل خشب"
+      - value: "other_artisanat"
+        label_fr: "Autre artisanat"
+        label_ar: "حرفي آخر"
+    next_rules:
+      - condition: "always"
+        next_node: "has_mvp_question"
+
+  # General questions for services/other or after sector-specific
+  general_questions:
+    type: "question"
+    question_id: "general_1"
+    question_text_fr: "Quel type de service ou de produit offrez-vous ?"
+    question_text_ar: "ما نوع الخدمة أو المنتج الذي تقدمه؟"
+    input_type: "text"
+    next_rules:
+      - condition: "always"
+        next_node: "has_mvp_question"
+
+  # Core validation questions (common to all sectors)
+  has_mvp_question:
+    type: "question"
+    question_id: "core_1"
+    question_text_fr: "Avez-vous développé un Produit Minimum Viable (MVP) ou un prototype fonctionnel ?"
+    question_text_ar: "هل قمت بتطوير منتج أدنى قابل للتطبيق (MVP) أو نموذج أولي وظيفي؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "validation_interviews_question"
+      - condition: "answer == false"
+        next_node: "idea_stage_questions"
+
+  idea_stage_questions:
+    type: "question"
+    question_id: "core_2"
+    question_text_fr: "Vous êtes toujours à l'étape de l'idée. Avez-vous réalisé des recherches préliminaires sur votre marché cible ?"
+    question_text_ar: "أنت لاتزال في مرحلة الفكرة. هل أجرت أبحاث أولية عن السوق المستهدف؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "market_research_question"
+      - condition: "answer == false"
+        next_node: "end_of_intake"
+
+  market_research_question:
+    type: "question"
+    question_id: "core_3"
+    question_text_fr: "Quel type de recherches avez-vous effectué ?"
+    question_text_ar: "ما نوع الأبحاث التي أجرتها؟"
+    input_type: "select"
+    options:
+      - value: "online"
+        label_fr: "Recherches en ligne"
+        label_ar: "ابحاث عبر الإنترنت"
+      - value: "interviews"
+        label_fr: "Entretiens avec des personnes"
+        label_ar: "مقابلات مع أشخاص"
+      - value: "observation"
+        label_fr: "Observation du marché"
+        label_ar: "مراقبة السوق"
+      - value: "none"
+        label_fr: "Aucune recherche formelle"
+        label_ar: "لا أبحاث رسمية"
+    next_rules:
+      - condition: "always"
+        next_node: "end_of_intake"
+
+  validation_interviews_question:
+    type: "question"
+    question_id: "core_4"
+    question_text_fr: "Avez-vous réalisé des entretiens de validation avec des clients potentiels ?"
+    question_text_ar: "هل أجريتم مقابلات تحقق مع عملاء محتملين؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "validation_depth_question"
+      - condition: "answer == false"
+        next_node: "has_mvp_only_question"
+
+  validation_depth_question:
+    type: "question"
+    question_id: "core_5"
+    question_text_fr: "Combien d'entretiens de validation avez-vous réalisé et ont-ils été documentés ?"
+    question_text_ar: "كم عدد المقابلات التحقق التي أجريتها وهل كانت موثقة؟"
+    input_type: "select"
+    options:
+      - value: "1_4_undoc"
+        label_fr: "1-4 entretiens, non documentés"
+        label_ar: "1-4 مقابلات، غير موثقة"
+      - value: "1_4_doc"
+        label_fr: "1-4 entretiens, documentés"
+        label_ar: "1-4 مقابلات، موثقة"
+      - value: "5_plus_undoc"
+        label_fr: "5+ entretiens, non documentés"
+        label_ar: "5+ مقابلات، غير موثقة"
+      - value: "5_plus_doc"
+        label_fr: "5+ entretiens, documentés"
+        label_ar: "5+ مقابلات، موثقة"
+    next_rules:
+      - condition: "always"
+        next_node: "has_pilot_question"
+
+  has_mvp_only_question:
+    type: "question"
+    question_id: "core_6"
+    question_text_fr: "Vous avez un MVP mais pas encore de validation client. Continuez-vous à développer le produit basé sur des hypothèses ?"
+    question_text_ar: "لديك MVP ولكن ليس بعد Validation العملاء. هل تستمر في تطوير المنتج بناءً على افتراضات؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "developing_on_assumptions"
+      - condition: "answer == false"
+        next_node: "seeking_feedback_question"
+
+  developing_on_assumptions:
+    type: "question"
+    question_id: "core_7"
+    question_text_fr: "Quel tipo d'hypotheses guidez-vous votre développement ?"
+    question_text_ar: "ما نوع الافتراضات التي توجه تطويرك؟"
+    input_type: "select"
+    options:
+      - value: "market_need"
+        label_fr: "Besoins du marché supposés"
+        label_ar: "احتياجات السوق المفترضة"
+      - value: "tech_feasibility"
+        label_fr: "Faisabilité technique supposée"
+        label_ar: "الجدوى التقنية المفترضة"
+      - value: "business_model"
+        label_fr: "Modèle économique supposé"
+        label_ar: "نموذج اقتصادي مفترض"
+      - value: "mixed"
+        label_fr: "Combinaison d'hypothèses"
+        label_ar: "مزيج من الافتراضات"
+    next_rules:
+      - condition: "always"
+        next_node: "end_of_intake"
+
+  seeking_feedback_question:
+    type: "question"
+    question_id: "core_8"
+    question_text_fr: "Cherchez-vous actuellement des retours utilisateurs pour améliorer votre MVP ?"
+    question_text_ar: "هل تبحث حاليًا عن ملاحظات المستخدمين لتحسين منتجك الأدنى القابل للتطبيق؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "planning_interviews"
+      - condition: "answer == false"
+        next_node: "end_of_intake"
+
+  planning_interviews:
+    type: "question"
+    question_id: "core_9"
+    question_text_fr: "Quel est votre plan pour obtenir ces retours utilisateurs ?"
+    question_text_ar: "ما هو خطتك للحصول على هذه الملاحظات من المستخدمين؟"
+    input_type: "select"
+    options:
+      - value: "surveys"
+        label_fr: "Sondages en ligne"
+        label_ar: "استبيانات عبر الإنترنت"
+      - value: "interviews"
+        label_fr: "Entretiens directs"
+        label_ar: "مقابلات مباشرة"
+      - value: "testing_sessions"
+        label_fr: "Sessions de test avec utilisateurs"
+        label_ar: "جلسات اختبار مع المستخدمين"
+      - value: "pilot_program"
+        label_fr: "Programme pilote avec clients"
+        label_ar: "برنامج تجريبي مع عملاء"
+    next_rules:
+      - condition: "always"
+        next_node: "end_of_intake"
+
+  has_pilot_question:
+    type: "question"
+    question_id: "core_10"
+    question_text_fr: "Avez-vous réalisé un test pilote ou une version bêta avec des utilisateurs réels ?"
+    question_text_ar: "هل قمت بإجراء اختبار تجريبي أو نسخة بيتا مع مستخدمين حقيقيين؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "pilot_results_question"
+      - condition: "answer == false"
+        next_node: "business_model_question"
+
+  pilot_results_question:
+    type: "question"
+    question_id: "core_11"
+    question_text_fr: "Quels ont été les résultats de votre test pilote ?"
+    question_text_ar: "ما كانت نتائج الاختبار التجريبي؟"
+    input_type: "select"
+    options:
+      - value: "positive"
+        label_fr: "Résultats positifs avec adoption utilisateur"
+        label_ar: "نتائج إيجابية مع تبني المستخدم"
+      - value: "mixed"
+        label_fr: "Résultats mixtes, certains aspects à améliorer"
+        label_ar: "نتائج مختلطة، بعض الجوانب تحتاج تحسين"
+      - value: "negative"
+        label_fr: "Résultats négatifs, nécessité de pivoter"
+        label_ar: "نتائج سلبية، الحاجة للتحويل"
+      - value: "pending"
+        label_fr: "Résultats encore en cours d'analyse"
+        label_ar: "نتائج ما تزال قيد التحليل"
+    next_rules:
+      - condition: "always"
+        next_node: "business_model_question"
+
+  business_model_question:
+    type: "question"
+    question_id: "core_12"
+    question_text_fr: "Avez-vous défini clairement votre modèle économique ?"
+    question_text_ar: "هل حددت بوضوح نموذجك الاقتصادي؟"
+    input_type: "select"
+    options:
+      - value: "undefined"
+        label_fr: "Non défini"
+        label_ar: "غير معرف"
+      - value: "draft"
+        label_fr: "Ébauche ou idée générale"
+        label_ar: "رسم أولي أو فكرة عامة"
+      - value: "tested"
+        label_fr: "Testé avec quelques clients"
+        label_ar: "تم تجريبه مع بعض العملاء"
+      - value: "documented"
+        label_fr: "Documenté et validé"
+        label_ar: "موثق ومُصدق"
+    next_rules:
+      - condition: "always"
+        next_node: "legal_form_question"
+
+  legal_form_question:
+    type: "question"
+    question_id: "core_13"
+    question_text_fr: "Quel est le statut juridique de votre entreprise ?"
+    question_text_ar: "ما هو الوضع القانوني لمؤسستك؟"
+    input_type: "select"
+    options:
+      - value: "not_registered"
+        label_fr: "Pas encore enregistré"
+        label_ar: "لم يتم تسجيله بعد"
+      - value: "auto_entrepreneur"
+        label_fr: "Auto-entrepreneur"
+        label_ar: "ريادي فردي"
+      - value: "sarl"
+        label_fr: "SARL"
+        label_ar: "ذ م م"
+      - value: "sa"
+        label_fr: "SA"
+        label_ar: "ش م"
+      - value: "association"
+        label_fr: "Association"
+        label_ar: "جمعوية"
+      - value: "other"
+        label_fr: "Autre statut juridique"
+        label_ar: "وضع قانوني آخر"
+    next_rules:
+      - condition: "always"
+        next_node: "team_question"
+
+  team_question:
+    type: "question"
+    question_id: "core_14"
+    question_text_fr: "Decrivez votre équipe actuelle :"
+    question_text_ar: "صف فريقك الحالي:"
+    input_type: "select"
+    options:
+      - value: "solo"
+        label_fr: "Fondateur seul"
+        label_ar: "مؤسس فردي"
+      - value: "co_founders"
+        label_fr: "Co-fondateurs (2-3 personnes)"
+        label_ar: "مؤسسين مشاركين (2-3 أشخاص)"
+      - value: "small_team"
+        label_fr: "Équipe petite (4-10 personnes)"
+        label_ar: "فريق صغير (4-10 أشخاص)"
+      - value: "growing_team"
+        label_fr: "Équipe en croissance (11+ personnes)"
+        label_ar: "فريق في نمو (11+ شخص)"
+    next_rules:
+      - condition: "always"
+        next_node: "full_time_question"
+
+  full_time_question:
+    type: "question"
+    question_id: "core_15"
+    question_text_fr: "Avez-vous des employés à temps plein dédiéés au projet ?"
+    question_text_ar: "هل لديك موظفين بدوام كامل مكرسين للمشروع؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "revenue_question"
+      - condition: "answer == false"
+        next_node: "part_time_question"
+
+  part_time_question:
+    type: "question"
+    question_id: "core_16"
+    question_text_fr: "Travaillez-vous avec des collaborateurs à temps partiel ou des freelances ?"
+    question_text_ar: "هل تعمل مع متعاونين بدوام جزئي أو مستقلين؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "revenue_question"
+      - condition: "answer == false"
+        next_node: "revenue_question"
+
+  revenue_question:
+    type: "question"
+    question_id: "core_17"
+    question_text_fr: "Générez-vous actuellement des revenus provenant de votre projet ?"
+    question_text_ar: "هل تحقق حاليًا إيرادات من مشروعك؟"
+    input_type: "select"
+    options:
+      - value: "none"
+        label_fr: "Pas de revenus (pré-revenus)"
+        label_ar: "لا إيرادات (قبل الإيرادات)"
+      - value: "first_sales"
+        label_fr: "Premières ventes occasionnelles"
+        label_ar: "مبيعات أولية عرضية"
+      - value: "recurring"
+        label_fr: "Revenus récurrents mensuels"
+        label_ar: "إيرادات شهرية متكررة"
+      - value: "profitable"
+        label_fr: "Entreprise rentable"
+        label_ar: "مشروع مربح"
+    next_rules:
+      - condition: "always"
+        next_node: "customer_count_question"
+
+  customer_count_question:
+    type: "question"
+    question_id: "core_18"
+    question_text_fr: "Combien de clients payants avez-vous actuellement ?"
+    question_text_ar: "كم عدد العملاء المدفوعين لديك حاليًا؟"
+    input_type: "select"
+    options:
+      - value: "zero"
+        label_fr: "Zéro client payant"
+        label_ar: "صفر عملاء مدفوعين"
+      - value: "1_10"
+        label_fr: "1-10 clients payants"
+        label_ar: "1-10 عملاء مدفوعين"
+      - value: "11_50"
+        label_fr: "11-50 clients payants"
+        label_ar: "11-50 عملاء مدفوعين"
+      - value: "51_plus"
+        label_fr: "51+ clients payants"
+        label_ar: "51+ عملاء مدفوعين"
+    next_rules:
+      - condition: "always"
+        next_node: "funding_question"
+
+  funding_question:
+    type: "question"
+    question_id: "core_19"
+    question_text_fr: "Recherchez-vous actuellement un financement extérieur ?"
+    question_text_ar: "هل تبحث حاليًا عن تمويل خارجي؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "funding_experience_question"
+      - condition: "answer == false"
+        next_node: "seeking_funding_reason"
+
+  funding_experience_question:
+    type: "question"
+    question_id: "core_20"
+    question_text_fr: "Avez-vous déjà effectué une levée de fonds ou reçu un investissement auparavant ?"
+    question_text_ar: "هل قمت سابقًا بعملية جمع تفويضات أو تلقيت استثمارًا؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "funding_amount_question"
+      - condition: "answer == false"
+        next_node: "funding_target_question"
+
+  funding_amount_question:
+    type: "question"
+    question_id: "core_21"
+    question_text_fr: "Quel montant avez-vous levé jusqu'à présent ?"
+    question_text_ar: "ما المبلغ الذي جمعته حتى الآن؟"
+    input_type: "select"
+    options:
+      - value: "less_50k"
+        label_fr: "Moins de 50 000 TND"
+        label_ar: "أقل من 50000 دينار تونسي"
+      - value: "50_200k"
+        label_fr: "50 000 - 200 000 TND"
+        label_ar: "50000 - 200000 دينار تونسي"
+      - value: "200_500k"
+        label_fr: "200 000 - 500 000 TND"
+        label_ar: "200000 - 500000 دينار تونسي"
+      - value: "more_500k"
+        label_fr: "Plus de 500 000 TND"
+        label_ar: "أكثر من 500000 دينار تونسي"
+    next_rules:
+      - condition: "always"
+        next_node: "end_of_intake"
+
+  funding_target_question:
+    type: "question"
+    question_id: "core_22"
+    question_text_fr: "Quel est votre objectif de financement ?"
+    question_text_ar: "ما هو هدفك التمويلي؟"
+    input_type: "select"
+    options:
+      - value: "less_100k"
+        label_fr: "Moins de 100 000 TND"
+        label_ar: "أقل من 100000 دينار تونسي"
+      - value: "100_500k"
+        label_fr: "100 000 - 500 000 TND"
+        label_ar: "100000 - 500000 دينار تونسي"
+      - value: "more_500k"
+        label_fr: "Plus de 500 000 TND"
+        label_ar: "أكثر من 500000 دينار تونسي"
+      - value: "not_sure"
+        label_fr: "Pas encore déterminé"
+        label_ar: "لم يتم تحديده بعد"
+    next_rules:
+      - condition: "always"
+        next_node: "end_of_intake"
+
+  seeking_funding_reason:
+    type: "question"
+    question_id: "core_23"
+    question_text_fr: "Pourquoi ne recherchez-vous pas de financement actuellement ?"
+    question_text_ar: "لماذا لا تبحث عن تمويل حاليًا؟"
+    input_type: "select"
+    options:
+      - value: "too_early"
+        label_fr: "Projet trop tôt pour chercher du financement"
+        label_ar: "المشروع مبكر جدًا للبحث عن تمويل"
+      - value: "bootstrapping"
+        label_fr: "Préfère l'autofinancement (bootstrapping)"
+        label_ar: "يفضّل التمويل الذاتي"
+      - value: "not_ready"
+        label_fr: "Pas encore prêt pour rencontrer des investisseurs"
+        label_ar: "لم يصبح جاهزًا بعد للقاء المستثمرين"
+      - value: "other_reason"
+        label_fr: "Autre raison"
+        label_ar: "سبب آخر"
+    next_rules:
+      - condition: "always"
+        next_node: "end_of_intake"
+
+  # Questions about support history
+  incubation_question:
+    type: "question"
+    question_id: "support_1"
+    question_text_fr: "Avez-vous participé à un programme d'incubation ou d'accélération ?"
+    question_text_ar: "هل参加ت في برنامج حاضنة أو مسرع؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "incubation_details"
+      - condition: "answer == false"
+        next_node: "state_aid_question"
+
+  incubation_details:
+    type: "question"
+    question_id: "support_2"
+    question_text_fr: "Quel type de programme avez-vous suivi ?"
+    question_text_ar: "ما نوع البرنامج الذي تابعته؟"
+    input_type: "select"
+    options:
+      - value: "public"
+        label_fr: "Programme public (ANPE, APII, etc.)"
+        label_ar: "برنامج حكومي (الأنابيب، apiи، إلخ)"
+      - value: "private"
+        label_fr: "Programme privé (incubateur/accélérateur)"
+        label_ar: "برنامج خاص (حاضنة/مسرع)"
+      - value: "universitaire"
+        label_fr: "Programme universitaire"
+        label_ar: "برنامج جامعي"
+      - value: "international"
+        label_fr: "Programme international"
+        label_ar: "برنامج دولي"
+    next_rules:
+      - condition: "always"
+        next_node: "state_aid_question"
+
+  state_aid_question:
+    type: "question"
+    question_id: "support_3"
+    question_text_fr: "Avez-vous bénéficié d'aides publiques ou de subventions étatiques ?"
+    question_text_ar: "هل استفدت من مساعدات عامة أو إعانات حكومية؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "state_aid_details"
+      - condition: "answer == false"
+        next_node: "previous_programs_question"
+
+  state_aid_details:
+    type: "question"
+    question_id: "support_4"
+    question_text_fr: "Quel type d'aide avez-vous reçu ?"
+    question_text_ar: "ما نوع المساعدة التي تلقيتها؟"
+    input_type: "select"
+    options:
+      - value: "fiscal"
+        label_fr: "Avantages fiscaux ou exonérations"
+        label_ar: "مزايا ضريبية أو إعفاءات"
+      - value: "financiere"
+        label_fr: "Aide financière directe"
+        label_ar: "مساعدة مالية مباشرة"
+      - value: "formation"
+        label_fr: "Formation ou accompagnement"
+        label_ar: "تدريب أو مرافقة"
+      - value: "materiel"
+        label_fr: "Équipement ou matériel"
+        label_ar: "تجهيزات أو معدات"
+    next_rules:
+      - condition: "always"
+        next_node: "previous_programs_question"
+
+  previous_programs_question:
+    type: "question"
+    question_id: "support_5"
+    question_text_fr: "Avez-vous participé à d'autres programmes d'accompagnement entrepreneurial ?"
+    question_text_ar: "هل شاركت في برامج أخرى للريادة؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "previous_programs_list"
+      - condition: "answer == false"
+        next_node: "ip_rd_question"
+
+  previous_programs_list:
+    type: "question"
+    question_id: "support_6"
+    question_text_fr: "Listez les programmes auxquels vous avez participé (séparés par des virgules)"
+    question_text_ar: "اذكر البرامج التي شاركت فيها (مفصولة بفواصل)"
+    input_type: "text"
+    next_rules:
+      - condition: "always"
+        next_node: "ip_rd_question"
+
+  # IP/R&D questions
+  ip_rd_question:
+    type: "question"
+    question_id: "ip_rd_1"
+    question_text_fr: "Votre projet implique-t-il de la propriété intellectuelle ou de la R&D ?"
+    question_text_ar: "هل يتضمن مشروعك ملكية فكرية أو بحث وتطوير؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "ip_type_question"
+      - condition: "answer == false"
+        next_node: "tech_readiness_question"
+
+  ip_type_question:
+    type: "question"
+    question_id: "ip_rd_2"
+    question_text_fr: "Quel type de propriété intellectuelle détendez-vous ou développez-vous ?"
+    question_text_ar: "ما نوع الملكية الفكرية التي تملكها أو تطورها؟"
+    input_type: "select"
+    options:
+      - value: "brevet"
+        label_fr: "Brevets ou demandes de brevet"
+        label_ar: "براءات اختراع أو طلبات براءة اختراع"
+      - value: "droit_auteur"
+        label_fr: "Droit d'auteur ou logiciel protégé"
+        label_ar: "حقوق تأليف أو برامج محمية"
+      - value: "marque"
+        label_fr: "Marques commerciales déposées"
+        label_ar: "علامات تجارية مسجلة"
+      - value: "knowhow"
+        label_fr: "Savoir-faire industriel ou technique"
+        label_ar: "خبرة صناعية أو تقنية"
+      - value: "multiple"
+        label_fr: "Plusieurs types de PI"
+        label_ar: "أنواع متعددة من الملكية الفكرية"
+    next_rules:
+      - condition: "always"
+        next_node: "tech_readiness_question"
+
+  tech_readiness_question:
+    type: "question"
+    question_id: "ip_rd_3"
+    question_text_fr: "Quel est le niveau de maturité technologique (TRL) de votre projet ?"
+    question_text_ar: "ما هو مستوى جاهزية التكنولوجيا (TRL) لمشروعك؟"
+    input_type: "select"
+    options:
+      - value: "trl_1_2"
+        label_fr: "TRL 1-2 : Recherche de base"
+        label_ar: "TRL 1-2:بحث أساسي"
+      - value: "trl_3_4"
+        label_fr: "TRL 3-4 : Validation en laboratoire"
+        label_ar: "TRL 3-4:تحقق في المختبر"
+      - value: "trl_5_6"
+        label_fr: "TRL 5-6 : Validation en condition réelle"
+        label_ar: "TRL 5-6:تحقق في ظروف حقيقية"
+      - value: "trl_7_8"
+        label_fr: "TRL 7-8 : Pré-commercialisation"
+        label_ar: "TRL 7-8:ما قبل التسويق"
+      - value: "trl_9"
+        label_fr: "TRL 9 : Système éprouvé en opération"
+        label_ar: "TRL 9:نظام مثبت في التشغيل"
+    next_rules:
+      - condition: "always"
+        next_node: "sustainability_question"
+
+  # Sustainability questions
+  sustainability_question:
+    type: "question"
+    question_id: "sust_1"
+    question_text_fr: "Votre projet intègre-t-il des aspects de durabilité ou d'impact social ?"
+    question_text_ar: "هل يتضمن مشروعك جوانب استدامة أو تأثير اجتماعي؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "sustainability_type"
+      - condition: "answer == false"
+        next_node: "digital_presence_question"
+
+  sustainability_type:
+    type: "question"
+    question_id: "sust_2"
+    question_text_fr: "Quel type d'approche durabilité suivez-vous ?"
+    question_text_ar: "ما نوع نهج الاستدامة الذي تتبعه؟"
+    input_type: "select"
+    options:
+      - value: "environnemental"
+        label_fr: "Focus sur l'impact environnemental"
+        label_ar: "التركيز على التأثير البيئي"
+      - value: "social"
+        label_fr: "Impact social et inclusion"
+        label_ar: "تأثير اجتماعي وإدماج"
+      - value: "economique"
+        label_fr: "Viabilité économique à long terme"
+        label_ar: "استدامة اقتصادية طويلة الأمد"
+      - value: "triple"
+        label_fr: "Approche triple (environnement, social, économie)"
+        label_ar: "نهج ثلاثي (بيئة، اجتماع، اقتصاد)"
+    next_rules:
+      - condition: "always"
+        next_node: "digital_presence_question"
+
+  # Digital presence questions
+  digital_presence_question:
+    type: "question"
+    question_id: "digital_1"
+    question_text_fr: "Votre projet possède-t-il une présence en ligne (site web, réseaux sociaux) ?"
+    question_text_ar: "هل possesses مشروعك حضورًا عبر الإنترنت (موقع إلكتروني، شبكات اجتماعية)؟"
+    input_type: "yes_no"
+    next_rules:
+      - condition: "answer == true"
+        next_node: "digital_details"
+      - condition: "answer == false"
+        next_node: "end_of_intake"
+
+  digital_details:
+    type: "question"
+    question_id: "digital_2"
+    question_text_fr: "Quels canaux numériques utilisez-vous actuellement ?"
+    question_text_ar: "ما القنوات الرقمية التي تستخدمها حاليًا؟"
+    input_type: "select"
+    options:
+      - value: "website_only"
+        label_fr: "Site web uniquement"
+        label_ar: "موقع إلكتروني فقط"
+      - value: "social_media"
+        label_fr: "Réseaux sociaux actifs"
+        label_ar: "شبكات اجتماعية نشطة"
+      - value: "both"
+        label_fr: "Site web et réseaux sociaux"
+        label_ar: "موقع إلكتروني وشبكات اجتماعية"
+      - value: "ecommerce"
+        label_fr: "Plateforme e-commerce"
+        label_ar: "منصة تجارة إلكترونية"
+      - value: "mobile_app"
+        label_fr: "Application mobile dédiée"
+        label_ar: "تطبيق جوال مخصص"
+    next_rules:
+      - condition: "always"
+        next_node: "end_of_intake"
+
+  # End node
+  end_of_intake:
+    type: "terminal"
+    question_id: "end_1"
+    question_text_fr: "Merci d'avoir répondu à toutes les questions ! Nous allons maintenant analyser votre profil."
+    question_text_ar: "شكرًا على إجابتك على جميع الأسئلة! سنقوم الآن بتحليل ملفك."
+    input_type: "info"
+    next_rules: []
